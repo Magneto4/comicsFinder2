@@ -1,0 +1,22 @@
+<div class="w-8/12 bg-red-950 self-center my-4">
+  {{#each @categories as |category|}}
+    <SearchBar @category={{category}}/>
+  {{/each}}
+  <button type="button" class="w-full bg-red-700 mb-6 h-12 text-gray-100 hover:bg-red-500" onclick={{this.searchComics}}>Search comics</button>
+  {{#if this.loading}}
+    <div class="animate-pulse space-x-4">
+      <div class="space-y-5 ml-4">
+        <div class="w-7/12 h-3 bg-slate-700 rounded"></div>
+        <div class="w-3/12 h-3 bg-slate-700 rounded"></div>
+        <div class="w-5/12 h-3 bg-slate-700 rounded"></div>
+      </div>
+    </div>
+  {{else}}
+    <ul class="space-y-1 ml-8 list-disc">
+    {{#each this.results as |result|}}
+      <li class="text-gray-100" id={{result}}>{{result}}</li>
+    {{/each}}
+    </ul>
+  {{/if}}
+  <div class="h-4"></div>
+</div>
