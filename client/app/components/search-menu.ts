@@ -18,7 +18,7 @@ export default class SearchMenuComponent extends Component<SearchMenuSignature> 
     this.results = null;
     this.loading = true;
 
-    const url = new URL('http://localhost:3000/api/appearances/');
+    const url = new URL('http://comicbooksfinder/api/appearances/');
     for (let category of this.args.categories) {
       if (category.selected.length) {
         url.searchParams.set(category.name, category.selected.join(','));
