@@ -9,8 +9,7 @@
     "build": "tsc -p tsconfig.build.json",
     "prestart:prod": "rimraf dist && npm run build",
     "postinstall": "npm run prestart:prod",
-    "start": "PORT=3000 nest start --watch",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "start": "PORT=3000 nest start --watch"
   },
   "dependencies": {
     "@nestjs/common": "^9.4.3",
