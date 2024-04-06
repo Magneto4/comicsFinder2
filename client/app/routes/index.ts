@@ -49,7 +49,7 @@ export default class IndexRoute extends Route {
     ];
 
     for (let category of categories) {
-      fetch('https://comicbooksfinder/api/list/' + category.category)
+      fetch('https://comicbooksfinder.com/api/list/' + category.category)
         .then((data) => {
           data.json().then((value) => {
             category.values = value;
