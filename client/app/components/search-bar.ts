@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import type Category from 'myTypes/category';
 import { tracked } from '@glimmer/tracking';
+import { debounce } from '@ember/runloop';
 
 export interface SearchBarSignature {
   Args: {
@@ -14,6 +15,7 @@ export default class SearchBarComponent extends Component<SearchBarSignature> {
   @tracked results: string[] = [];
   @tracked selected: string[] = [];
   lastType = 0;
+  event: InputEvent | null = null;
 
   condition(searching: string, el: string) {
     const re = RegExp(`.*${searching.toLowerCase().split('').join('.*')}.*`);
@@ -47,19 +49,22 @@ export default class SearchBarComponent extends Component<SearchBarSignature> {
     }
   }
 
+  updateSearchResults() {
+    if (this.args.category.values) {
+      this.results = this.args.category.values.filter((el) =>
+        this.condition((this.event!.target as HTMLTextAreaElement).value, el),
+      );
+    }
+  }
+
   @action
-  updateValue(event: any) {
-    this.lastType = Date.now();
-    if (event.target.value.length == 0) {
+  updateValue(event: InputEvent) {
+    if ((event.target as HTMLTextAreaElement)?.value.length == 0) {
       this.results = [];
     } else {
-      setTimeout(() => {
-        if (this.args.category.values && Date.now() - this.lastType > 200) {
-          this.results = this.args.category.values.filter((el) =>
-            this.condition(event.target.value, el),
-          );
-        }
-      }, 200);
+      this.event = event;
+      // @ts-ignore
+      debounce(this, this.updateSearchResults, 200);
     }
   }
 }
