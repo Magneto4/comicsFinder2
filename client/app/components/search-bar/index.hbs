@@ -21,11 +21,14 @@
     {{on "input" this.updateValue}}
     {{!-- oninput={{this.updateValue}} --}}
   />
-    <p>{{this.count}}</p>
   <div class="max-h-52 overflow-auto bg-white">
-    {{#each this.results as |result|}}
-    <button class="w-full text-left px-2 py-1 hover:bg-gray-300" type="button" onclick={{(fn this.select result)}}>{{result}}</button>
-    <br/>
-    {{/each}}
+    {{#if this.tooManyResults}}
+      <p>Too many results</p>
+    {{else}}
+      {{#each this.results as |result|}}
+        <button class="w-full text-left px-2 py-1 hover:bg-gray-300" type="button" onclick={{(fn this.select result)}}>{{result}}</button>
+        <br/>
+      {{/each}}
+    {{/if}}
   </div>
 </div>

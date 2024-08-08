@@ -14,19 +14,22 @@ export default class SearchBarComponent extends Component<SearchBarSignature> {
   @tracked searching: string = '';
   @tracked results: string[] = [];
   @tracked selected: string[] = [];
+  @tracked tooManyResults: boolean = false;
   lastType = 0;
   event: InputEvent | null = null;
 
-  condition(searching: string, el: string) {
-    const re = RegExp(`.*${searching.toLowerCase().split('').join('.*')}.*`);
-    return el.toLowerCase().match(re);
-  }
+  condition(searching: string, item: string) {
+    let separator = /[ \(\-\)]+/;
+    const queryWords = searching.toLowerCase().split(separator);
 
-  result() {
-    return 'this.results';
+    const itemWords = item.toLowerCase().split(separator);
+    return queryWords.every((qWord) =>
+      itemWords.some((iWord) => iWord.startsWith(qWord)),
+    );
   }
 
   anySelected() {
+    console.log('here');
     return this.selected.length;
   }
 
@@ -54,6 +57,7 @@ export default class SearchBarComponent extends Component<SearchBarSignature> {
       this.results = this.args.category.values.filter((el) =>
         this.condition((this.event!.target as HTMLTextAreaElement).value, el),
       );
+      this.tooManyResults = this.results.length > 10000;
     }
   }
 
@@ -64,7 +68,7 @@ export default class SearchBarComponent extends Component<SearchBarSignature> {
     } else {
       this.event = event;
       // @ts-ignore
-      debounce(this, this.updateSearchResults, 200);
+      debounce(this, this.updateSearchResults, 500);
     }
   }
 }

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type Category from 'myTypes/category';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export interface SearchMenuSignature {
   Args: {
@@ -19,7 +19,7 @@ export default class SearchMenuComponent extends Component<SearchMenuSignature> 
     this.loading = true;
 
     const url = new URL('https://comicbooksfinder.com/api/appearances/');
-    for (let category of this.args.categories) {
+    for (const category of this.args.categories) {
       if (category.selected.length) {
         url.searchParams.set(category.name, category.selected.join(','));
       }
