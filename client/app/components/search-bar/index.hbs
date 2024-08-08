@@ -3,7 +3,7 @@
   <br/>
   <div class="flex gap-2 flex-wrap">
     {{#each this.selected as |selected|}}
-    <button class="h-6 text-left px-2 py-1 bg-gray-100 hover:bg-gray-300 flex items-center" type="button" onclick={{(fn this.unselect selected)}}>
+    <button class="text-left px-2 py-1 bg-gray-100 hover:bg-gray-300 flex items-center" type="button" onclick={{(fn this.unselect selected)}}>
       {{selected}}
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x-lg mx-3" viewBox="0 0 16 16">
         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
@@ -19,6 +19,7 @@
     type="text"
     value={{this.searching}}
     {{on "input" this.updateValue}}
+    class="w-full"
     {{!-- oninput={{this.updateValue}} --}}
   />
   <div class="max-h-52 overflow-auto bg-white">
