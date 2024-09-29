@@ -49,8 +49,8 @@ export class AppController {
     return await getList(category);
   }
 
-  @Get("/list/Marvel_Staff/:category")
+  @Get("/list/Creators/:category")
   async createMessage3(@Param("category") category: string) {
-    return await getList("Marvel_Staff/" + category);
+    return await getList("Creators/" + category);
   }
 }
